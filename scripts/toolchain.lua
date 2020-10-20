@@ -230,8 +230,8 @@ function toolchain(_buildDir, _libDir)
 				print("Set ANDROID_NDK_CLANG, ANDROID_NDK_ARM64, and ANDROID_NDK_ROOT environment variables.")
 			end
 
-			premake.gcc.cc   = "$(ANDROID_NDK_CLANG)/bin/clang"
-			premake.gcc.cxx  = "$(ANDROID_NDK_CLANG)/bin/clang++"
+			premake.gcc.cc   = "$(ANDROID_NDK_CLANG)/bin/aarch64-linux-android24-clang"
+			premake.gcc.cxx  = "$(ANDROID_NDK_CLANG)/bin/aarch64-linux-android24-clang++"
 			premake.gcc.ar   = "$(ANDROID_NDK_ARM64)/bin/aarch64-linux-android-ar"
 
 			premake.gcc.llvm = true
@@ -811,8 +811,6 @@ function toolchain(_buildDir, _libDir)
 			"NoImportLib",
 		}
 		includedirs {
-			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/include",
-			"${ANDROID_NDK_ROOT}/sysroot/usr/include",
 			"$(ANDROID_NDK_ROOT)/sources/android/native_app_glue",
 		}
 		linkoptions {
@@ -851,6 +849,8 @@ function toolchain(_buildDir, _libDir)
 			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a",
 		}
 		includedirs {
+			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/include",
+            "${ANDROID_NDK_ROOT}/sysroot/usr/include",
 			"$(ANDROID_NDK_ROOT)/sysroot/usr/include/arm-linux-androideabi",
 		}
 		buildoptions {
@@ -880,13 +880,8 @@ function toolchain(_buildDir, _libDir)
 			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/libs/arm64-v8a",
 		}
 		includedirs {
-			"$(ANDROID_NDK_ROOT)/sysroot/usr/include/aarch64-linux-android",
 		}
 		buildoptions {
-			"-gcc-toolchain $(ANDROID_NDK_ARM64)",
-			"--sysroot=" .. path.join("$(ANDROID_NDK_ROOT)/platforms", androidPlatform, "arch-arm64"),
-			"-target aarch64-none-linux-androideabi",
-			"-march=armv8-a",
 			"-Wunused-value",
 			"-Wundef",
 		}
@@ -906,6 +901,8 @@ function toolchain(_buildDir, _libDir)
 			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/libs/x86",
 		}
 		includedirs {
+			"$(ANDROID_NDK_ROOT)/sources/cxx-stl/llvm-libc++/include",
+            "${ANDROID_NDK_ROOT}/sysroot/usr/include",
 			"$(ANDROID_NDK_ROOT)/sysroot/usr/include/x86_64-linux-android",
 		}
 		buildoptions {
